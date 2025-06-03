@@ -1,0 +1,26 @@
+// src/pages/index.ts
+export { default as HomePage } from "./HomePage";
+export { default as VideoPage } from "./VideoPage";
+export { default as SearchResultsPage } from "./SearchResultsPage";
+export { default as NotFound } from "./NotFound";
+export { default as SettingsPage } from "./SettingsPage";
+export { default as ProfilePage } from "./ProfilePage";
+export { default as YourChannelPage } from "./YourChannelPage";
+export { default as HistoryPage } from "./HistoryPage";
+export { default as ShortsPage } from "./ShortsPage";
+export { default as SubscriptionsPage } from "./SubscriptionsPage";
+export { default as TrendingPage } from "./TrendingPage";
+export { default as MusicPage } from "./MusicPage";
+export { default as LivePage } from "./LivePage";
+export { default as GamingPage } from "./GamingPage";
+export { default as NewsPage } from "./NewsPage";
+export { default as SportsPage } from "./SportsPage";
+export { default as ShoppingPage } from "./ShoppingPage";
+export { default as LikedVideos } from "./LikedVideos";
+export { default as Watchlist } from "./Watchlist";
+export { default as LoginPage } from "./LoginPage";
+export { default as RegisterPage } from "./RegisterPage";
+export { default as UploadPage } from "./UploadPage";
+export { default as PostPage } from "./PostPage";
+export { default as ChannelCreationPage } from "./ChannelCreationPage";
+export { default as PublicChannelPage } from "./PublicChannelPage";
