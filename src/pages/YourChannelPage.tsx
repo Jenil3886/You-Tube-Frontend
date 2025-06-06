@@ -786,51 +786,79 @@ const YourChannelPage = () => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
 
+	// useEffect(() => {
+	// 	const fetchChannelAndVideos = async () => {
+	// 		setIsLoading(true);
+	// 		try {
+	// 			// Fetch channel details
+	// 			const channelResponse = await axios.get(`${apiurl}/channels/me`, {
+	// 				headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+	// 			});
+	// 			const channelData = channelResponse.data.data || channelResponse.data.channel || null;
+	// 			setChannel(channelData);
+
+	// 			if (channelData) {
+	// 				// Fetch videos
+	// 				const videosResponse = await axios.get(`${apiurl}/videos`, {
+	// 					headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+	// 				});
+	// 				const allVideos = videosResponse.data.data.rows || videosResponse.data.data || [];
+
+	// 				// Filter videos where channelName matches channel.name
+	// 				const filteredVideos = allVideos
+	// 					.filter((video: any) => video.channel?.name === channelData.name)
+	// 					.map((video: any) => ({
+	// 						id: video.id,
+	// 						thumbnail: video.thumbnail,
+	// 						title: video.title,
+	// 						channelName: video.channel?.name || "Unknown Channel",
+	// 						channelAvatar: video.channel?.profilePicture || "/default-avatar.png",
+	// 						handle: video.channel?.handle || "",
+	// 						views: video.views?.toString() || "0",
+	// 						timestamp: video.createdAt,
+	// 						duration: formatDuration(video.duration),
+	// 					}));
+	// 				setVideos(filteredVideos);
+	// 			}
+	// 		} catch (err: any) {
+	// 			console.error("Error fetching data:", err);
+	// 			setError(err.response?.data?.message || "Failed to fetch channel or videos");
+	// 			setChannel(null);
+	// 			setVideos([]);
+	// 		} finally {
+	// 			setIsLoading(false);
+	// 		}
+	// 	};
+	// 	fetchChannelAndVideos();
+	// }, []);
+
 	useEffect(() => {
 		const fetchChannelAndVideos = async () => {
 			setIsLoading(true);
 			try {
-				// Fetch channel details
-				const channelResponse = await axios.get(`${apiurl}/channels/me`, {
+				const { data } = await axios.get(`${apiurl}/channels/me`, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
 				});
-				const channelData = channelResponse.data.data || channelResponse.data.channel || null;
-				setChannel(channelData);
 
-				if (channelData) {
-					// Fetch videos
-					const videosResponse = await axios.get(`${apiurl}/videos`, {
-						headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-					});
-					const allVideos = videosResponse.data.data.rows || videosResponse.data.data || [];
-
-					// Filter videos where channelName matches channel.name
-					const filteredVideos = allVideos
-						.filter((video: any) => video.channel?.name === channelData.name)
-						.map((video: any) => ({
-							id: video.id,
-							thumbnail: video.thumbnail,
-							title: video.title,
-							channelName: video.channel?.name || "Unknown Channel",
-							channelAvatar: video.channel?.profilePicture || "/default-avatar.png",
-							handle: video.channel?.handle || "",
-							views: video.views?.toString() || "0",
-							timestamp: video.createdAt,
-							duration: formatDuration(video.duration),
-						}));
-					setVideos(filteredVideos);
+				if (!data?.data && !data?.channel) {
+					navigate("/create-channel", { replace: true });
+					return;
 				}
+
+				const channelData = data.data || data.channel;
+				setChannel(channelData);
 			} catch (err: any) {
-				console.error("Error fetching data:", err);
-				setError(err.response?.data?.message || "Failed to fetch channel or videos");
-				setChannel(null);
-				setVideos([]);
+				if (err?.response?.status === 404) {
+					navigate("/create-channel", { replace: true });
+					return;
+				}
+				setError(err.response?.data?.message ?? "Failed to fetch channel or videos");
 			} finally {
 				setIsLoading(false);
 			}
 		};
 		fetchChannelAndVideos();
-	}, []);
+	}, [navigate]);
 
 	const handleUpload = () => {
 		setUploading(true);

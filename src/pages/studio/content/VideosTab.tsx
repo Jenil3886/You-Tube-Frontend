@@ -640,21 +640,56 @@ const VideosTab = () => {
 		setSelectedVideos((prev) => (checked ? [...prev, id] : prev.filter((videoId) => videoId !== id)));
 	};
 
+	// const handleDeleteSelected = async () => {
+	// 	try {
+	// 		const token = localStorage.getItem("accessToken");
+	// 		await Promise.all(
+	// 			selectedVideos.map((id) =>
+	// 				axios.delete(`${apiurl}/videos/${id}`, {
+	// 					headers: { Authorization: `Bearer ${token}` },
+	// 				})
+	// 			)
+	// 		);
+	// 		const updatedVideos = videos.filter((video) => !selectedVideos.includes(video.id));
+	// 		setVideos(updatedVideos);
+	// 		setFilteredVideos(filterVideos(updatedVideos, filter));
+	// 		setSelectedVideos([]);
+	// 		setIsDeleteDialogOpen(false);
+	// 	} catch (err: any) {
+	// 		setError(err.response?.data?.message || "Failed to delete videos");
+	// 		setIsDeleteDialogOpen(false);
+	// 	}
+	// };
+
 	const handleDeleteSelected = async () => {
 		try {
 			const token = localStorage.getItem("accessToken");
-			await Promise.all(
+			if (!token) {
+				setError("User is not authenticated.");
+				setIsDeleteDialogOpen(false);
+				return;
+			}
+
+			const deleteResults = await Promise.allSettled(
 				selectedVideos.map((id) =>
 					axios.delete(`${apiurl}/videos/${id}`, {
 						headers: { Authorization: `Bearer ${token}` },
 					})
 				)
 			);
-			const updatedVideos = videos.filter((video) => !selectedVideos.includes(video.id));
+
+			const successfulDeletes = selectedVideos.filter((_, i) => deleteResults[i].status === "fulfilled");
+
+			const updatedVideos = videos.filter((video) => !successfulDeletes.includes(video.id));
 			setVideos(updatedVideos);
 			setFilteredVideos(filterVideos(updatedVideos, filter));
 			setSelectedVideos([]);
 			setIsDeleteDialogOpen(false);
+
+			const failedCount = deleteResults.filter((res) => res.status === "rejected").length;
+			if (failedCount > 0) {
+				setError(`${failedCount} video(s) could not be deleted.`);
+			}
 		} catch (err: any) {
 			setError(err.response?.data?.message || "Failed to delete videos");
 			setIsDeleteDialogOpen(false);
