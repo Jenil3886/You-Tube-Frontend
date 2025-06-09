@@ -860,6 +860,36 @@ const YourChannelPage = () => {
 		fetchChannelAndVideos();
 	}, [navigate]);
 
+	useEffect(() => {
+		const fetchVideos = async () => {
+			try {
+				const token = localStorage.getItem("accessToken");
+				const response = await axios.get(`${apiurl}/videos`, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
+
+				const mappedVideos = response.data.data.rows.map((video: any) => ({
+					id: video.id,
+					thumbnail: video.thumbnail,
+					title: video.title,
+					channelName: video.channel?.name || "Unknown Channel",
+					channelAvatar: video.channel?.profilePicture || "/default-avatar.png",
+					handle: video.channel?.handle || "",
+					views: video.views?.toString() || "0",
+					timestamp: video.createdAt,
+					duration: formatDuration(video.duration),
+				}));
+				setVideos(mappedVideos);
+			} catch (err: any) {
+				setError(err.response?.data?.message || "Failed to fetch videos");
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchVideos();
+	}, []);
+
 	const handleUpload = () => {
 		setUploading(true);
 		setTimeout(() => {
@@ -1005,7 +1035,21 @@ const YourChannelPage = () => {
 						</Select>
 					</div>
 
-					{videos.length > 0 ? <VideoGrid videos={videos} /> : <p className="text-center text-muted-foreground">No videos found for this channel.</p>}
+					{error ? (
+						<ErrorPage message={error} />
+					) : isLoading ? (
+						<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+							{Array.from({ length: 8 }).map((_, index) => (
+								<div key={index} className="animate-pulse flex flex-col">
+									<div className="aspect-[16/9] bg-muted rounded-lg"></div>
+									<div className="mt-2 h-4 bg-muted rounded"></div>
+									<div className="mt-1 h-4 bg-muted rounded w-3/4"></div>
+								</div>
+							))}
+						</div>
+					) : (
+						<VideoGrid videos={videos} />
+					)}
 				</TabsContent>
 
 				<TabsContent value="playlists">

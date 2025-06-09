@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import VideoGrid from "@/components/video/VideoGrid";
 import { apiurl } from "@/constants";
-import { formatDuration } from "@/utils/helper";
 
 interface Channel {
 	id: string;
@@ -65,7 +64,7 @@ const PublicChannelPage = () => {
 				setVideos(filteredVideos);
 			} catch (err) {
 				console.error("Error fetching channel data", err.response?.data || err.message);
-				setError("Channel not found");
+				setError("Channel not found ");
 			} finally {
 				setLoading(false);
 			}

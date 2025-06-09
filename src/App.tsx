@@ -129,15 +129,8 @@
 
 // export default App;
 
-// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-// import { Toaster } from "./components/ui/toaster";
+import { Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
-// import { ToastProvider } from "./components/ui/toast";
-// import { TooltipProvider } from "./components/ui/tooltip";
-// import { ThemeProvider } from "./context/ThemeContext";
-
-// pages
 import AppLayout from "@/components/layout/AppLayout";
 import {
 	HomePage,
@@ -166,8 +159,6 @@ import {
 	ChannelCreationPage,
 	PublicChannelPage,
 } from "@/pages/index";
-
-// youtube studio pages
 import StudioLayout from "./components/layout/StudioLayout";
 import {
 	StudioAnalyticsPage,
@@ -202,7 +193,6 @@ const App = () => {
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/register" element={<RegisterPage />} />
 			<Route path="/" element={isAuthenticated ? <AppLayout /> : <Navigate to="/login" />}>
-				{/* <Route path="/" element={<AppLayout />}> */}
 				<Route index element={<HomePage />} />
 				<Route path="/video/:videoId" element={<VideoPage />} />
 				<Route path="/search" element={<SearchResultsPage />} />

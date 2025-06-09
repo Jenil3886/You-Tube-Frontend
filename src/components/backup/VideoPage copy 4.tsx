@@ -288,6 +288,8 @@
 // 			const token = localStorage.getItem("accessToken");
 // 			if (!token) return;
 
+// 			console.log("Toggling subscription for channel:", video.channelId);
+
 // 			const response = await axios.post(
 // 				`${apiurl}/subscriptions/c/${video.channelId}`,
 // 				{},
@@ -297,10 +299,7 @@
 // 			);
 
 // 			const subscribed = response.data?.data?.subscribed;
-// 			const subscriberCount = response.data?.data?.subscriberCount;
 // 			setIsSubscribed(subscribed);
-// 			// Update the video.subscribers count in state
-// 			setVideo((prev: any) => prev ? { ...prev, subscribers: subscriberCount?.toLocaleString?.() || subscriberCount || "" } : prev);
 
 // 			toast({
 // 				title: subscribed ? "Subscribed" : "Unsubscribed",
@@ -656,17 +655,12 @@ import {
 	Settings,
 	MonitorPlay,
 	Volume1,
-	QrCode,
-	Clock,
-	ChevronRight,
+	
 } from "lucide-react";
 import { BiSolidVolumeMute } from "react-icons/bi";
 import { VideoSkeleton } from "@/components/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { set } from "react-hook-form";
-import { HiAdjustmentsHorizontal } from "react-icons/hi2";
-import { IoPlayCircleOutline } from "react-icons/io5";
-import { SettingsDropdown } from "@/components/dropdowns/SettingsDropdown";
+
 
 interface CommentType {
 	id: number;
@@ -694,7 +688,7 @@ interface VideoType {
 	channelId: number;
 	channelName: string;
 	channelAvatar: string;
-	subscribers: string | number; // allow number for easier update
+	subscribers: string;
 	views: string;
 	timestamp: string;
 	likes: string;
@@ -913,21 +907,15 @@ const VideoPage = () => {
 		try {
 			const token = localStorage.getItem("accessToken");
 			if (!token) return;
-
 			const response = await axios.post(
-				`${apiurl}/subscriptions/c/${video.channelId}`,
+				`${apiurl}/subscriptions/c/${video?.channelId}`,
 				{},
 				{
 					headers: { Authorization: `Bearer ${token}` },
 				}
 			);
-
 			const subscribed = response.data?.data?.subscribed;
-			const subscriberCount = response.data?.data?.subscriberCount;
 			setIsSubscribed(subscribed);
-			// Update the video.subscribers count in state
-			setVideo((prev: any) => (prev ? { ...prev, subscribers: subscriberCount?.toLocaleString?.() || subscriberCount || "" } : prev));
-
 			toast({
 				title: subscribed ? "Subscribed" : "Unsubscribed",
 				description: subscribed ? "You have subscribed to this channel." : "You have unsubscribed from this channel.",
@@ -941,6 +929,7 @@ const VideoPage = () => {
 		}
 	};
 
+	// Like handler
 	const handleLike = async () => {
 		if (!videoId) return;
 		try {
@@ -973,6 +962,7 @@ const VideoPage = () => {
 		}
 	};
 
+	// Controls handlers
 	const togglePlayPause = () => {
 		if (videoRef.current) {
 			videoRef.current.paused ? videoRef.current.play().then(() => setIsPlaying(true)) : videoRef.current.pause();

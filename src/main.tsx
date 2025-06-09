@@ -26,6 +26,7 @@ import { ToastProvider } from "@radix-ui/react-toast";
 import { Toaster } from "./components/ui/toaster.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { SocketProvider } from "./context/SocketContext.tsx";
+import { VideoUploadProvider } from "./context/VideoUploadContext.tsx";
 
 // Add a small delay to allow for page transitions
 // document.addEventListener("DOMContentLoaded", () => {
@@ -35,19 +36,21 @@ import { SocketProvider } from "./context/SocketContext.tsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <SocketProvider>
-        <ThemeProvider>
-          <TooltipProvider>
-            <ToastProvider />
-            <Toaster />
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </TooltipProvider>
-        </ThemeProvider>
-      </SocketProvider>
-    </QueryClientProvider>
-  </StrictMode>
+	<StrictMode>
+		<VideoUploadProvider>
+			<QueryClientProvider client={queryClient}>
+				<SocketProvider>
+					<ThemeProvider>
+						<TooltipProvider>
+							<ToastProvider />
+							<Toaster />
+							<BrowserRouter>
+								<App />
+							</BrowserRouter>
+						</TooltipProvider>
+					</ThemeProvider>
+				</SocketProvider>
+			</QueryClientProvider>
+		</VideoUploadProvider>
+	</StrictMode>
 );

@@ -34,7 +34,7 @@ const VideoGrid = ({ videos }: VideoGridProps) => {
 				element.style.transition = "opacity 0.5s ease, transform 0.5s ease";
 				element.style.opacity = "1";
 				element.style.transform = "translateY(0)";
-			}, 100 * index); // Staggered timing
+			}, 100 * index);
 		});
 	}, [videos]);
 
