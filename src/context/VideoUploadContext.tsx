@@ -11,7 +11,7 @@ interface UploadingVideo {
 interface VideoUploadContextType {
 	uploadingVideos: Record<string, UploadingVideo>;
 	addUploadingVideo: (id: string, title?: string) => void;
-	updateUploadedVideo: (oldId: string, apiVideo: any) => void;
+	updateUploadedVideo: (oldId: string, apiVideo: string) => void;
 	removeUploadingVideo: (id: string) => void;
 	updateUploadingProgress: (id: string, progress: number) => void; // Add progress updater
 }
@@ -46,7 +46,7 @@ export const VideoUploadProvider: React.FC<{ children: React.ReactNode }> = ({ c
 		});
 	}, []);
 
-	const updateUploadedVideo = useCallback((oldId: string, apiVideo: any) => {
+	const updateUploadedVideo = useCallback((oldId: string, apiVideo: string) => {
 		setUploadingVideos((prev) => {
 			const newVideos = { ...prev };
 			delete newVideos[oldId];

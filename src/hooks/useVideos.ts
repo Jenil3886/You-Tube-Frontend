@@ -36,7 +36,7 @@ interface ApiVideo {
 type FilterOption = "all" | "public" | "private" | "byViews" | "byDate";
 
 // Utility Functions
-const mapApiVideos = (videos: ApiVideo[], currentUserId: string): Video[] =>
+export const mapApiVideos = (videos: ApiVideo[], currentUserId: string): Video[] =>
 	videos
 		.filter((video) => video.channel?.id === currentUserId)
 		.map((video) => ({
@@ -48,7 +48,7 @@ const mapApiVideos = (videos: ApiVideo[], currentUserId: string): Video[] =>
 			handle: video.channel?.handle || "",
 			views: video.views?.toString() || "0",
 			timestamp: video.createdAt,
-			duration: formatDuration(video.duration),
+			duration: formatDuration(Number(video.duration)),
 			visibility: video.visibility || "Public",
 		}));
 
@@ -96,8 +96,12 @@ const useVideos = () => {
 			setVideos(mappedVideos);
 			setFilteredVideos(mappedVideos);
 			setSelectedVideos([]);
-		} catch (err: any) {
-			setError(err.response?.data?.message || "Failed to fetch videos or user info");
+		} catch (err: unknown) {
+			let msg = "Failed to fetch videos or user info";
+			if (axios.isAxiosError(err) && err.response?.data && typeof err.response.data.message === "string") {
+				msg = err.response.data.message;
+			}
+			setError(msg);
 		} finally {
 			setLoading(false);
 		}
@@ -131,7 +135,7 @@ const useVideos = () => {
 			setFilteredVideos(filterVideos(updatedVideos, filter));
 			setSelectedVideos([]);
 			return true;
-		} catch (err: any) {
+		} catch (err: unknown) {
 			setError(err.response?.data?.message || "Failed to delete videos");
 			return false;
 		}
@@ -155,4 +159,5 @@ const useVideos = () => {
 	};
 };
 
+export type { Video };
 export default useVideos;

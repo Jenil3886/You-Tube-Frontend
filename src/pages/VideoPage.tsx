@@ -656,18 +656,10 @@ import {
 	Settings,
 	MonitorPlay,
 	Volume1,
-	QrCode,
-	Clock,
-	ChevronRight,
 } from "lucide-react";
 import { BiSolidVolumeMute } from "react-icons/bi";
 import { VideoSkeleton } from "@/components/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { set } from "react-hook-form";
-import { HiAdjustmentsHorizontal } from "react-icons/hi2";
-import { IoPlayCircleOutline } from "react-icons/io5";
-import { SettingsDropdown } from "@/components/dropdowns/SettingsDropdown";
-
 interface CommentType {
 	id: number;
 	content: string;
@@ -676,14 +668,6 @@ interface CommentType {
 		name?: string;
 		avatar?: string;
 	};
-}
-
-interface ChannelType {
-	id: number;
-	name: string;
-	profilePicture?: string;
-	subscriberCount?: number;
-	isSubscribed?: number;
 }
 
 interface VideoType {
@@ -702,6 +686,8 @@ interface VideoType {
 	duration: number;
 	comments: CommentType[];
 	previewFolder: string; // URL of the .vtt file
+	userAvtar: string;
+	isLiked: boolean;
 }
 
 const VideoPage = () => {
@@ -764,6 +750,7 @@ const VideoPage = () => {
 				duration: parseFloat(v.duration),
 				comments: [],
 				previewFolder: v.previewFolder,
+				userAvtar: v.owner?.avatar,
 
 				isLiked: v.isLiked === true,
 			});
@@ -1295,7 +1282,7 @@ const VideoPage = () => {
 				<div className="mt-6">
 					<h3 className="text-lg font-medium mb-4">{comments.length} Comments</h3>
 					<div className="flex gap-4 mb-6">
-						<img src="https://randomuser.me/api/portraits/lego/1.jpg" alt="Your avatar" className="w-10 h-10 rounded-full" />
+						<img src={video.userAvtar} alt="your avatar" className="w-10 h-10 rounded-full" />
 						<div className="flex-1">
 							<input
 								type="text"

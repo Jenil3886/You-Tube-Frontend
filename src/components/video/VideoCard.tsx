@@ -11,7 +11,7 @@ interface VideoCardProps {
 	channelName?: string;
 	handle: string;
 	channelAvatar: string;
-	views: string;
+	views: number;
 	timestamp: string;
 	duration: string;
 	compact?: boolean;
@@ -29,7 +29,7 @@ const VideoCard = ({
 	duration,
 	compact = false,
 }: VideoCardProps) => {
-	const [viewCount, setViewCount] = useState(Number(views));
+	const [viewCount, setViewCount] = useState<number>(Number(views));
 
 	const incrementView = async () => {
 		setViewCount((prev) => prev + 1); // Optimistic UI

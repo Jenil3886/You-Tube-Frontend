@@ -10,13 +10,44 @@ import ErrorPage from "@/components/ui/ErrorPage";
 // import { Link } from "react-router-dom";
 import VideoGrid from "@/components/video/VideoGrid";
 import { apiurl } from "@/constants";
+import { mapApiVideos } from "@/hooks/useVideos";
+import type { Video } from "@/hooks/useVideos";
+
+// interface Profile {
+// 	id: string;
+// 	username: string;
+// 	fullName: string;
+// 	email: string;
+// 	avatar?: string;
+// 	bio?: string;
+// 	createdAt?: string;
+// }
+
+export interface Profile {
+	id: number;
+	fullName: string;
+	username: string;
+	email: string;
+	avatar: string;
+	coverImage: string;
+	name: string;
+	handle: string;
+	description: string;
+	profilePicture: string;
+	bannerPicture: string;
+	subscriberCount: number;
+	ownerId: number;
+	createdAt: string;
+	updatedAt: string;
+}
 
 const ProfilePage = () => {
-	const [profile, setProfile] = useState<any>(null);
+	const [profile, setProfile] = useState<Profile | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
-	const [videos, setVideos] = useState<any[]>([]);
+	const [videos, setVideos] = useState<Video[]>([]);
 	const [videosLoading, setVideosLoading] = useState(false);
+	const [channelId, setChannelId] = useState<string | null>(null);
 
 	const fetchProfile = async () => {
 		try {
@@ -26,25 +57,33 @@ const ProfilePage = () => {
 				withCredentials: true,
 			});
 			setProfile(response.data.data);
-		} catch (err: any) {
-			setError(err.response?.data?.message || "Failed to fetch profile data");
+			// Fetch channel info after profile
+			// const channelRes = await axios.get(`${apiurl}/channels/me`, {
+			// 	headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+			// });
+			// setChannelId(channelRes.data.data?.id || channelRes.data.channel?.id || null);
+		} catch (err) {
+			setError(
+				axios.isAxiosError(err) && err.response?.data && typeof err.response.data.message === "string"
+					? err.response.data.message
+					: "Failed to fetch profile data"
+			);
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	console.log("Profile data:", profile);
-
 	const fetchUserVideos = async () => {
 		try {
 			setVideosLoading(true);
-			const response = await axios.get(`${apiurl}/videos?ownerId=${profile?.id}`, {
-				withCredentials: true,
+			const response = await axios.get(`${apiurl}/videos`, {
+				headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
 			});
-			console.log("Fetched videos:", response.data.data);
-			setVideos(response.data.data);
-		} catch (err: any) {
-			console.error("Failed to fetch user videos:", err.response || err.message || err);
+			const mappedVideos = mapApiVideos(response.data.data.rows || response.data.data, channelId || "");
+			setVideos(mappedVideos);
+		} catch (err) {
+			console.error("Failed to fetch user videos:", err);
 		} finally {
 			setVideosLoading(false);
 		}
@@ -55,10 +94,11 @@ const ProfilePage = () => {
 	}, []);
 
 	useEffect(() => {
-		if (profile?.id) {
+		if (channelId) {
 			fetchUserVideos();
 		}
-	}, [profile]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [channelId]);
 
 	if (loading) {
 		return <ProfileSkeleton />;
@@ -89,7 +129,7 @@ const ProfilePage = () => {
 							<div className="space-y-3">
 								<div className="flex justify-between">
 									<span className="text-muted-foreground">Subscribers</span>
-									<span className="font-medium">{profile?.subscribersCount || 0}</span>
+									<span className="font-medium">{profile?.subscriberCount || 0}</span>
 								</div>
 								<div className="flex justify-between">
 									<span className="text-muted-foreground">Total views</span>
@@ -97,7 +137,7 @@ const ProfilePage = () => {
 								</div>
 								<div className="flex justify-between">
 									<span className="text-muted-foreground">Videos</span>
-									<span className="font-medium">{videos?.count || 0}</span>
+									<span className="font-medium">{videos.length}</span>
 								</div>
 								<div className="flex justify-between">
 									<span className="text-muted-foreground">Email</span>

@@ -397,10 +397,6 @@
 // const YourChannelPage = () => {
 // 	const [uploading, setUploading] = useState(false);
 // 	const [channel, setChannel] = useState<Channel | null>(null);
-// 	const [isLoading, setIsLoading] = useState(true);
-// 	const [isCustomizeModalOpen, setIsCustomizeModalOpen] = useState(false);
-// 	const navigate = useNavigate();
-// 	const { toast } = useToast();
 // 	const [videos, setVideos] = useState([]);
 // 	const [loading, setLoading] = useState(true);
 // 	const [error, setError] = useState("");
@@ -748,8 +744,8 @@ import CustomizeChannelModal from "@/components/channel/CustomizeChannelModal";
 import { apiurl } from "@/constants";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ChannelSkeleton from "@/components/skeleton/Channel";
-import { formatDuration } from "@/utils/helper";
 import ErrorPage from "@/components/ui/ErrorPage";
+import { mapApiVideos } from "@/hooks/useVideos";
 
 // Type definition for a channel
 interface Channel {
@@ -786,109 +782,41 @@ const YourChannelPage = () => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
 
-	// useEffect(() => {
-	// 	const fetchChannelAndVideos = async () => {
-	// 		setIsLoading(true);
-	// 		try {
-	// 			// Fetch channel details
-	// 			const channelResponse = await axios.get(`${apiurl}/channels/me`, {
-	// 				headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-	// 			});
-	// 			const channelData = channelResponse.data.data || channelResponse.data.channel || null;
-	// 			setChannel(channelData);
-
-	// 			if (channelData) {
-	// 				// Fetch videos
-	// 				const videosResponse = await axios.get(`${apiurl}/videos`, {
-	// 					headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-	// 				});
-	// 				const allVideos = videosResponse.data.data.rows || videosResponse.data.data || [];
-
-	// 				// Filter videos where channelName matches channel.name
-	// 				const filteredVideos = allVideos
-	// 					.filter((video: any) => video.channel?.name === channelData.name)
-	// 					.map((video: any) => ({
-	// 						id: video.id,
-	// 						thumbnail: video.thumbnail,
-	// 						title: video.title,
-	// 						channelName: video.channel?.name || "Unknown Channel",
-	// 						channelAvatar: video.channel?.profilePicture || "/default-avatar.png",
-	// 						handle: video.channel?.handle || "",
-	// 						views: video.views?.toString() || "0",
-	// 						timestamp: video.createdAt,
-	// 						duration: formatDuration(video.duration),
-	// 					}));
-	// 				setVideos(filteredVideos);
-	// 			}
-	// 		} catch (err: any) {
-	// 			console.error("Error fetching data:", err);
-	// 			setError(err.response?.data?.message || "Failed to fetch channel or videos");
-	// 			setChannel(null);
-	// 			setVideos([]);
-	// 		} finally {
-	// 			setIsLoading(false);
-	// 		}
-	// 	};
-	// 	fetchChannelAndVideos();
-	// }, []);
-
 	useEffect(() => {
 		const fetchChannelAndVideos = async () => {
 			setIsLoading(true);
 			try {
-				const { data } = await axios.get(`${apiurl}/channels/me`, {
-					headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-				});
-
-				if (!data?.data && !data?.channel) {
+				const token = localStorage.getItem("accessToken");
+				const [channelResponse, videoResponse] = await Promise.all([
+					axios.get(`${apiurl}/channels/me`, {
+						headers: { Authorization: `Bearer ${token}` },
+					}),
+					axios.get(`${apiurl}/videos`, {
+						headers: { Authorization: `Bearer ${token}` },
+					}),
+				]);
+				const channelData = channelResponse.data.data || channelResponse.data.channel;
+				if (!channelData) {
 					navigate("/create-channel", { replace: true });
 					return;
 				}
-
-				const channelData = data.data || data.channel;
 				setChannel(channelData);
-			} catch (err: any) {
-				if (err?.response?.status === 404) {
-					navigate("/create-channel", { replace: true });
-					return;
+				const mappedVideos = mapApiVideos(videoResponse.data.data.rows, channelData.id);
+				setVideos(mappedVideos);
+			} catch (err: unknown) {
+				let msg = "Failed to fetch channel or videos";
+				if (axios.isAxiosError(err) && err.response?.data && typeof err.response.data.message === "string") {
+					msg = err.response.data.message;
 				}
-				setError(err.response?.data?.message ?? "Failed to fetch channel or videos");
+				setError(msg);
+				setChannel(null);
+				setVideos([]);
 			} finally {
 				setIsLoading(false);
 			}
 		};
 		fetchChannelAndVideos();
 	}, [navigate]);
-
-	useEffect(() => {
-		const fetchVideos = async () => {
-			try {
-				const token = localStorage.getItem("accessToken");
-				const response = await axios.get(`${apiurl}/videos`, {
-					headers: { Authorization: `Bearer ${token}` },
-				});
-
-				const mappedVideos = response.data.data.rows.map((video: any) => ({
-					id: video.id,
-					thumbnail: video.thumbnail,
-					title: video.title,
-					channelName: video.channel?.name || "Unknown Channel",
-					channelAvatar: video.channel?.profilePicture || "/default-avatar.png",
-					handle: video.channel?.handle || "",
-					views: video.views?.toString() || "0",
-					timestamp: video.createdAt,
-					duration: formatDuration(video.duration),
-				}));
-				setVideos(mappedVideos);
-			} catch (err: any) {
-				setError(err.response?.data?.message || "Failed to fetch videos");
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchVideos();
-	}, []);
 
 	const handleUpload = () => {
 		setUploading(true);
