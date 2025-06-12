@@ -74,7 +74,7 @@ const RegisterPage = () => {
 
 			setTimeout(() => {
 				navigate("/login");
-			}, 2000);
+			}, 1000);
 		} catch (err: any) {
 			console.error("Registration Error:", err.response || err.message || err);
 			const backendError =

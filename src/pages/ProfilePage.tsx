@@ -58,10 +58,10 @@ const ProfilePage = () => {
 			});
 			setProfile(response.data.data);
 			// Fetch channel info after profile
-			// const channelRes = await axios.get(`${apiurl}/channels/me`, {
-			// 	headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-			// });
-			// setChannelId(channelRes.data.data?.id || channelRes.data.channel?.id || null);
+			const channelRes = await axios.get(`${apiurl}/channels/me`, {
+				headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+			});
+			setChannelId(channelRes.data.data?.id || channelRes.data.channel?.id || null);
 		} catch (err) {
 			setError(
 				axios.isAxiosError(err) && err.response?.data && typeof err.response.data.message === "string"

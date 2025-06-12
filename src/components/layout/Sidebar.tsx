@@ -48,7 +48,7 @@ const Sidebar = ({ open }: SidebarProps) => {
 	const isMobile = useIsMobile();
 	return (
 		<aside
-			className={`z-40 fixed top-16 left-0 h-[calc(100vh-4rem)] bg-background border-r transition-all duration-300 ease-in-out overflow-y-auto  ${
+			className={`z-40 fixed top-17 left-0 h-[calc(100vh-4rem)] bg-background border-r transition-all duration-300 ease-in-out overflow-y-auto  ${
 				isMobile ? (open ? "w-64" : "-translate-x-full") : open ? "w-64" : "w-20"
 			} transform md:translate-x-0 [&::-webkit-scrollbar]:w-[1px] [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-800 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-600`}
 		>

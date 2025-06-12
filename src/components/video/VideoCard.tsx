@@ -41,7 +41,6 @@ const VideoCard = ({
 	};
 
 	return compact ? (
-		// Mobile layout
 		<div className="hover-grow flex gap-2">
 			<Link to={`/video/${id}`} className="block flex-shrink-0 w-40 h-22" onClick={incrementView}>
 				<div className="relative">

@@ -158,6 +158,8 @@ import {
 	PostPage,
 	ChannelCreationPage,
 	PublicChannelPage,
+	ForgotPasswordPage,
+	ResetPasswordPage,
 } from "@/pages/index";
 import StudioLayout from "./components/layout/StudioLayout";
 import {
@@ -171,8 +173,8 @@ import {
 	StudioSubtitlesPage,
 } from "@/pages/studio/index";
 import EditVideo from "./pages/studio/content/video/EditVideo";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
+// import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+// import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 // Set up Axios to include the Authorization header for all requests
 axios.interceptors.request.use((config) => {

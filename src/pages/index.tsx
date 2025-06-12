@@ -24,3 +24,5 @@ export { default as UploadPage } from "./UploadPage";
 export { default as PostPage } from "./PostPage";
 export { default as ChannelCreationPage } from "./ChannelCreationPage";
 export { default as PublicChannelPage } from "./PublicChannelPage";
+export { default as ForgotPasswordPage } from "./ForgotPasswordPage";
+export { default as ResetPasswordPage } from "./ResetPasswordPage";
