@@ -655,48 +655,11 @@ import {
 	Settings,
 	MonitorPlay,
 	Volume1,
-	
 } from "lucide-react";
 import { BiSolidVolumeMute } from "react-icons/bi";
 import { VideoSkeleton } from "@/components/skeleton";
 import { useToast } from "@/hooks/use-toast";
-
-
-interface CommentType {
-	id: number;
-	content: string;
-	createdAt: string;
-	owner?: {
-		name?: string;
-		avatar?: string;
-	};
-}
-
-interface ChannelType {
-	id: number;
-	name: string;
-	profilePicture?: string;
-	subscriberCount?: number;
-	isSubscribed?: number;
-}
-
-interface VideoType {
-	id: number;
-	thumbnail: string;
-	videoUrl: string;
-	title: string;
-	channelId: number;
-	channelName: string;
-	channelAvatar: string;
-	subscribers: string;
-	views: string;
-	timestamp: string;
-	likes: string;
-	description: string;
-	duration: number;
-	comments: CommentType[];
-	previewFolder: string; // URL of the .vtt file
-}
+import { CommentType, VideoType } from "@/types";
 
 const VideoPage = () => {
 	const { videoId } = useParams<{ videoId: string }>();
@@ -716,7 +679,7 @@ const VideoPage = () => {
 	const [volume, setVolume] = useState<number>(1);
 	const [isMuted, setIsMuted] = useState<boolean>(false);
 	const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
-	const [bufferedEnd, setBufferedEnd] = useState<number>(0);
+	const [_bufferedEnd, setBufferedEnd] = useState<number>(0);
 	const [comments, setComments] = useState<CommentType[]>([]);
 	const [commentsLoading, setCommentsLoading] = useState<boolean>(false);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -747,9 +710,9 @@ const VideoPage = () => {
 				thumbnail: v.thumbnail,
 				videoUrl: v.videoFile,
 				title: v.title,
-				channelId: v.channel?.id,
 				channelName: v.channel?.name || "Unknown Channel",
 				channelAvatar: v.channel?.profilePicture || "/default-avatar.png",
+				channelId: v.channel?.id,
 				subscribers: v.channel?.subscriberCount?.toLocaleString() || "",
 				views: v.views?.toLocaleString() || "0",
 				timestamp: getRelativeTime(v.createdAt),
@@ -758,7 +721,7 @@ const VideoPage = () => {
 				duration: parseFloat(v.duration),
 				comments: [],
 				previewFolder: v.previewFolder,
-
+				userAvtar: v.owner?.avatar,
 				isLiked: v.isLiked === true,
 			});
 			setIsSubscribed(v.channel?.isSubscribed === 1);
@@ -770,7 +733,7 @@ const VideoPage = () => {
 
 	useEffect(() => {
 		fetchVideo();
-	}, [videoId]);
+	}, [fatchVideo]);
 
 	useEffect(() => {
 		if (video) {

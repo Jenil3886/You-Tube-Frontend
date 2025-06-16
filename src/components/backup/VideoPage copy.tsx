@@ -3,10 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import Hls from "hls.js";
 import axios from "axios";
 import { apiurl } from "@/constants";
-import { getRelativeTime, formatViewCount } from "@/utils/helper";
+import { getRelativeTime } from "@/utils/helper";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp, Share, Download, MoreHorizontal, ThumbsDown } from "lucide-react";
-import { SubscriptionDropdown } from "@/components/dropdowns";
 
 const VideoPage = () => {
 	const { videoId } = useParams();

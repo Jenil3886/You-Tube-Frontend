@@ -7,10 +7,7 @@ import ThemeToggle from "../header/ThemeToggle";
 import UserMenu from "../header/UserMenu";
 import NotificationButton from "../header/NotificationButton";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-interface HeaderProps {
-	onMenuClick: () => void;
-}
+import { HeaderProps } from "@/types";
 
 const Header = ({ onMenuClick }: HeaderProps) => {
 	const isMobile = useIsMobile();

@@ -3,13 +3,7 @@ import { Filter } from "lucide-react";
 import VideoGrid from "../video/VideoGrid";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-interface CategoryPageProps {
-	title: string;
-	description?: string;
-	filters?: string[];
-	videos: any[];
-}
+import { CategoryPageProps } from "@/types";
 
 const CategoryPage = ({ title, description, filters, videos }: CategoryPageProps) => {
 	const isMobile = useIsMobile();

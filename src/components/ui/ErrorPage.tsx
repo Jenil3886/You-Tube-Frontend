@@ -1,14 +1,6 @@
 import { ShieldAlert } from "lucide-react";
 import { Button } from "./button";
-
-interface ErrorPageProps {
-	title?: string;
-	message: string;
-	onRetry?: () => void;
-	showReportButton?: boolean;
-	onReport?: () => void;
-	errorCode?: string | number; // Optional error code
-}
+import { ErrorPageProps } from "@/types";
 
 const ErrorPage = ({ title = "Something went wrong", message, onRetry, showReportButton, onReport, errorCode }: ErrorPageProps) => {
 	return (

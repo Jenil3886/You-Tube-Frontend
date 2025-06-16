@@ -20,38 +20,9 @@ import { FaPencilAlt } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { MdOutlineChat, MdOutlineInsertChart } from "react-icons/md";
+import { ApiVideo, Video } from "@/types";
 
 // Types
-interface Video {
-	id: string;
-	thumbnail: string;
-	title: string;
-	channelName: string;
-	channelAvatar: string;
-	handle: string;
-	views: string;
-	timestamp: string;
-	duration: string;
-	visibility: string;
-	commentCount: number; // <-- add this
-}
-
-interface ApiVideo {
-	id: string;
-	thumbnail: string;
-	title: string;
-	channel?: {
-		id: string;
-		name: string;
-		profilePicture?: string;
-		handle?: string;
-	};
-	views?: number;
-	createdAt: string;
-	duration: string;
-	visibility?: string;
-	commentCount?: number; // <-- add this
-}
 
 // Filter Options Type
 type FilterOption = "all" | "public" | "private" | "byViews" | "byDate";
@@ -80,7 +51,7 @@ const mapApiVideos = (videos: ApiVideo[], currentUserId: string): Video[] =>
 			timestamp: video.createdAt,
 			duration: formatDuration(video.duration),
 			visibility: video.visibility || "Public",
-			commentCount: video.commentCount ?? 0, // <-- use backend value
+			commentCount: video.commentCount ?? 0,
 		}));
 
 const filterVideos = (videos: Video[], filter: FilterOption): Video[] => {

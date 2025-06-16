@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 // import { Input } from "@/components/ui/input";
 import { locations } from "@/data/location";
-
-interface LocationDropdownProps {
-	onClose: () => void;
-}
+import { LocationDropdownProps } from "@/types";
 
 const LocationDropdown = ({ onClose }: LocationDropdownProps) => {
 	const [selectedLocation, setSelectedLocation] = useState("India");

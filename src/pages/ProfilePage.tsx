@@ -12,6 +12,7 @@ import VideoGrid from "@/components/video/VideoGrid";
 import { apiurl } from "@/constants";
 import { mapApiVideos } from "@/hooks/useVideos";
 import type { Video } from "@/hooks/useVideos";
+import { Profile } from "@/types";
 
 // interface Profile {
 // 	id: string;
@@ -22,24 +23,6 @@ import type { Video } from "@/hooks/useVideos";
 // 	bio?: string;
 // 	createdAt?: string;
 // }
-
-export interface Profile {
-	id: number;
-	fullName: string;
-	username: string;
-	email: string;
-	avatar: string;
-	coverImage: string;
-	name: string;
-	handle: string;
-	description: string;
-	profilePicture: string;
-	bannerPicture: string;
-	subscriberCount: number;
-	ownerId: number;
-	createdAt: string;
-	updatedAt: string;
-}
 
 const ProfilePage = () => {
 	const [profile, setProfile] = useState<Profile | null>(null);

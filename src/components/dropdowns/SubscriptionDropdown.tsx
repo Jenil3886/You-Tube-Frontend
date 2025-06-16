@@ -2,11 +2,7 @@ import { useState } from "react";
 import { Bell, User, X } from "lucide-react";
 import { MdNotificationsActive, MdNotificationsNone, MdOutlineNotificationsOff } from "react-icons/md";
 import { FaUserMinus } from "react-icons/fa";
-
-interface SubscriptionDropdownProps {
-	isSubscribed: boolean;
-	onUnsubscribe: () => void;
-}
+import { SubscriptionDropdownProps } from "@/types";
 
 const SubscriptionDropdown = ({ isSubscribed, onUnsubscribe }: SubscriptionDropdownProps) => {
 	const [isOpen, setIsOpen] = useState(false);

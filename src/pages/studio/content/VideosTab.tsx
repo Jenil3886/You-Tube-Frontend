@@ -23,39 +23,9 @@ import EmptyState from "@/components/video/EmptyState";
 import VideoCard from "./VideoCard";
 import VideoTable from "./VideoTable";
 import UploadingVideoCard from "@/components/video/UploadingVideoCard";
+import { ApiVideo, Video } from "@/types";
 
 // Types
-interface Video {
-	id: string;
-	thumbnail: string;
-	title: string;
-	channelName: string;
-	channelAvatar: string;
-	handle: string;
-	views: string;
-	timestamp: string;
-	duration: string;
-	visibility: string;
-	commentCount: number;
-	isTemporary?: boolean; // Optional flag for uploading videos
-}
-
-interface ApiVideo {
-	id: string;
-	thumbnail: string;
-	title: string;
-	channel?: {
-		id: string;
-		name: string;
-		profilePicture?: string;
-		handle?: string;
-	};
-	views?: number;
-	createdAt: string;
-	duration: string;
-	visibility?: string;
-	commentCount?: number;
-}
 
 // Filter Options Type
 type FilterOption = "all" | "public" | "private" | "byViews" | "byDate";

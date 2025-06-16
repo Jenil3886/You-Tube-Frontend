@@ -136,17 +136,7 @@ import Hls from "hls.js";
 import { Button } from "@/components/ui/button";
 import { X, Maximize, Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { Link } from "react-router-dom";
-
-interface MiniPlayerProps {
-	video: {
-		id: string;
-		title: string;
-		channelName: string;
-		videoUrl: string; // Should be .m3u8 URL
-		thumbnail: string;
-	};
-	onClose: () => void;
-}
+import { MiniPlayerProps } from "@/types";
 
 const MiniPlayer = ({ video, onClose }: MiniPlayerProps) => {
 	const [isPlaying, setIsPlaying] = useState(false);

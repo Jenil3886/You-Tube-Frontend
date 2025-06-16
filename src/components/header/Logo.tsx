@@ -2,10 +2,7 @@ import { Link } from "react-router-dom";
 import { AlignJustify } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import YoutubeLogo from "@/assets/youtubelogo.png";
-
-interface LogoProps {
-	onMenuClick: () => void;
-}
+import { LogoProps } from "@/types";
 
 const Logo = ({ onMenuClick }: LogoProps) => {
 	return (

@@ -6,10 +6,7 @@ import { FaRegChartBar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { apiurl } from "@/constants";
-
-interface SidebarProps {
-	open: boolean;
-}
+import { SidebarProps } from "@/types";
 
 const StudioSidebar = ({ open }: SidebarProps) => {
 	const isMobile = useIsMobile();
@@ -114,7 +111,7 @@ const StudioSidebar = ({ open }: SidebarProps) => {
 
 				<nav className="space-y-1 px-2">
 					<NavLink
-						to="/studio/settings"
+						to="/settings"
 						className={({ isActive }) =>
 							`flex items-center gap-4 px-3 py-2.5 rounded-lg w-full transition-colors ${
 								isActive ? "bg-zinc-100 dark:bg-zinc-800 font-medium" : "hover:bg-zinc-100 dark:hover:bg-zinc-800/50"

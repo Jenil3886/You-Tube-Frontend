@@ -746,31 +746,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import ChannelSkeleton from "@/components/skeleton/Channel";
 import ErrorPage from "@/components/ui/ErrorPage";
 import { mapApiVideos } from "@/hooks/useVideos";
-
-// Type definition for a channel
-interface Channel {
-	id: string;
-	name: string;
-	handle: string;
-	description?: string;
-	profilePicture?: string | null;
-	channelBanner?: string | null;
-	createdAt: string;
-	subscribers?: string;
-}
-
-// Type definition for a video
-interface Video {
-	id: string;
-	thumbnail: string;
-	title: string;
-	channelName: string;
-	channelAvatar: string;
-	handle: string;
-	views: string;
-	timestamp: string;
-	duration: string;
-}
+import { Channel, Video } from "@/types";
 
 const YourChannelPage = () => {
 	const [uploading, setUploading] = useState(false);

@@ -1,5 +1,6 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import UploadingVideoRow from "@/components/video/UploadingVideoRow";
+import { VideoTableProps } from "@/types";
 import { formatDateToDDMMYYYY } from "@/utils/helper";
 import { LucideYoutube } from "lucide-react";
 import { useState } from "react";
@@ -7,13 +8,6 @@ import { FaPencilAlt } from "react-icons/fa";
 import { MdOutlineChat, MdOutlineInsertChart } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-
-interface VideoTableProps {
-	videos: any[];
-	selectedVideos: string[];
-	onSelectVideo: (id: string, checked: boolean) => void;
-	uploadingCount?: number;
-}
 
 const VideoTable = ({ videos, selectedVideos, onSelectVideo, uploadingCount = 0 }: VideoTableProps) => {
 	const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);

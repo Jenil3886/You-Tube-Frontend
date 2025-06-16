@@ -3,16 +3,10 @@ import { useState } from "react";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { Button } from "../ui/button";
+import { SettingOption } from "@/types";
 
 export const SettingsDropdown = () => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
-	interface SettingOption {
-		label: string;
-		icon: React.ComponentType<{ size?: number }>;
-		toggle?: boolean;
-		onClick?: () => void;
-	}
 
 	const settingsOptions: SettingOption[] = [
 		{

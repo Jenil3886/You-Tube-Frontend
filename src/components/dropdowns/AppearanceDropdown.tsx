@@ -1,10 +1,7 @@
 import { ArrowLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/context/ThemeContext";
-
-interface AppearanceDropdownProps {
-	onClose: () => void;
-}
+import { AppearanceDropdownProps } from "@/types";
 
 const AppearanceDropdown = ({ onClose }: AppearanceDropdownProps) => {
 	const { theme, setTheme } = useTheme();

@@ -1,20 +1,6 @@
 // src/context/VideoUploadContext.tsx
+import { UploadingVideo, VideoUploadContextType } from "@/types";
 import React, { createContext, useState, useContext, useCallback } from "react";
-
-interface UploadingVideo {
-	id: string;
-	title: string;
-	timestamp: string;
-	progress?: number; // Add progress field
-}
-
-interface VideoUploadContextType {
-	uploadingVideos: Record<string, UploadingVideo>;
-	addUploadingVideo: (id: string, title?: string) => void;
-	updateUploadedVideo: (oldId: string, apiVideo: string) => void;
-	removeUploadingVideo: (id: string) => void;
-	updateUploadingProgress: (id: string, progress: number) => void; // Add progress updater
-}
 
 const VideoUploadContext = createContext<VideoUploadContextType | undefined>(undefined);
 

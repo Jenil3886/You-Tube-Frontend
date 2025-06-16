@@ -2,16 +2,7 @@ import { Settings, MoreVertical } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-
-interface Notification {
-	id: string;
-	avatar: string;
-	channel: string;
-	title: string;
-	time: string;
-	thumbnail?: string;
-	isImportant?: boolean;
-}
+import { Notification, NotificationsDrawerProps } from "@/types";
 
 const mockNotifications: Notification[] = [
 	{
@@ -48,11 +39,6 @@ const mockNotifications: Notification[] = [
 		thumbnail: "https://picsum.photos/100/56?random=4",
 	},
 ];
-
-interface NotificationsDrawerProps {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-}
 
 const NotificationsDrawer = ({ open, onOpenChange }: NotificationsDrawerProps) => {
 	return (

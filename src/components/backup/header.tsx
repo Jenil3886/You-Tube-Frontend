@@ -23,11 +23,7 @@ import YoutubeLogo from "@/assets/youtubelogo.png";
 import KeyboardShortcuts from "@/components/dropdowns/KeyboardShortcuts";
 import NotificationsDrawer from "../notifications/NotificationsDrawer";
 import { apiurl } from "@/constants";
-
-// Add TypeScript declarations for the Web Speech API
-interface SpeechRecognitionErrorEvent extends Event {
-	error: string;
-}
+import { SpeechRecognitionErrorEvent } from "@/types";
 
 interface SpeechRecognitionEvent extends Event {
 	results: SpeechRecognitionResultList;

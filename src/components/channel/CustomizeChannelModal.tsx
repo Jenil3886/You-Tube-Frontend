@@ -11,24 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Upload, User } from "lucide-react";
 import axios from "axios";
 import { apiurl } from "@/constants";
-
-interface Channel {
-	id: string;
-	name: string;
-	handle: string;
-	description?: string;
-	profilePicture?: string | null;
-	channelBanner?: string | null;
-	createdAt: string;
-	subscribers?: string;
-}
-
-interface CustomizeChannelModalProps {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-	activeChannel: Channel | null;
-	onUpdateChannel: (updatedChannel: Channel) => void;
-}
+import { CustomizeChannelModalProps } from "@/types";
 
 const CustomizeChannelModal = ({ open, onOpenChange, activeChannel, onUpdateChannel }: CustomizeChannelModalProps) => {
 	const navigate = useNavigate();

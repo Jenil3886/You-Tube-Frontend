@@ -1,6 +1,4 @@
-interface KeyboardShortcutsProps {
-	onClose: () => void;
-}
+import { KeyboardShortcutsProps } from "@/types";
 
 const KeyboardShortcuts = ({ onClose }: KeyboardShortcutsProps) => {
 	const sections = [

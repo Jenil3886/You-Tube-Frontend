@@ -4,27 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import VideoGrid from "@/components/video/VideoGrid";
 import { apiurl } from "@/constants";
-
-interface Channel {
-	id: string;
-	name: string;
-	description?: string | null;
-	profilePicture?: string | null;
-	channelBanner?: string | null;
-	ownerId: string;
-	createdAt: string;
-}
-
-interface Video {
-	id: string;
-	title: string;
-	thumbnail: string;
-	views: string;
-	timestamp: string;
-	duration: string;
-	channelName: string;
-	channelAvatar: string;
-}
+import { Channel, Video } from "@/types";
 
 const PublicChannelPage = () => {
 	const { handle } = useParams<{ handle: string }>();

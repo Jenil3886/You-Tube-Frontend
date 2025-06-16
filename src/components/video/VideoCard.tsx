@@ -3,19 +3,7 @@ import { formatViewCount, getRelativeTime } from "@/utils/helper";
 import axios from "axios";
 import { apiurl } from "@/constants";
 import { useState } from "react";
-
-interface VideoCardProps {
-	id: string;
-	thumbnail: string;
-	title: string;
-	channelName?: string;
-	handle: string;
-	channelAvatar: string;
-	views: number;
-	timestamp: string;
-	duration: string;
-	compact?: boolean;
-}
+import { VideoCardProps } from "@/types";
 
 const VideoCard = ({
 	id,

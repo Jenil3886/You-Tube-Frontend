@@ -3,10 +3,7 @@ import StudioSearchBar from "../StudioHeader/StudioSearchBar";
 import StudioHelp from "../StudioHeader/StudioHelp";
 import StudioCreateButton from "../StudioHeader/StudioCreateButton";
 import StudioUserMenu from "../StudioHeader/StudioUserMenu";
-
-interface HeaderProps {
-	onMenuClick: () => void;
-}
+import { HeaderProps } from "@/types";
 
 const StudioHeader = ({ onMenuClick }: HeaderProps) => {
 	return (

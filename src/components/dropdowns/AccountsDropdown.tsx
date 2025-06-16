@@ -1,10 +1,7 @@
 import { ArrowLeft, Check } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-
-interface AccountsDropdownProps {
-	onClose: () => void;
-}
+import { AccountsDropdownProps } from "@/types";
 
 const AccountsDropdown = ({ onClose }: AccountsDropdownProps) => {
 	// Mock accounts data

@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { apiurl } from "@/constants";
 import { formatDuration } from "@/utils/helper";
+import { ApiVideo } from "@/types";
 
 // Types
 interface Video {
@@ -15,22 +16,6 @@ interface Video {
 	timestamp: string;
 	duration: string;
 	visibility: string;
-}
-
-interface ApiVideo {
-	id: string;
-	thumbnail: string;
-	title: string;
-	channel?: {
-		id: string;
-		name: string;
-		profilePicture?: string;
-		handle?: string;
-	};
-	views?: number;
-	createdAt: string;
-	duration: string;
-	visibility?: string;
 }
 
 type FilterOption = "all" | "public" | "private" | "byViews" | "byDate";

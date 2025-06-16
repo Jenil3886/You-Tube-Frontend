@@ -9,17 +9,7 @@ import { apiurl, FRONTEND_URL } from "@/constants";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { VideoEditSkeleton } from "@/components/skeleton/videoEdit";
-
-interface VideoDetails {
-	id: string;
-	title: string;
-	description: string;
-	thumbnail: string;
-	visibility: string;
-	madeForKids: boolean;
-	relatedVideo?: string;
-	duration: string;
-}
+import { VideoDetails } from "@/types";
 
 const EditVideo = () => {
 	const { videoId } = useParams<{ videoId: string }>(); // Get videoId from URL

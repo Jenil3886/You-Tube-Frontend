@@ -2,10 +2,7 @@ import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-
-interface RestrictedModeDropdownProps {
-	onClose: () => void;
-}
+import { RestrictedModeDropdownProps } from "@/types";
 
 const RestrictedModeDropdown = ({ onClose }: RestrictedModeDropdownProps) => {
 	const [restrictedMode, setRestrictedMode] = useState(false);

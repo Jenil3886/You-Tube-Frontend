@@ -18,17 +18,7 @@ import {
 	PanelLeft,
 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-interface SidebarProps {
-	open: boolean;
-}
-
-interface SidebarItemProps {
-	icon: React.ReactNode;
-	text: string;
-	to: string;
-	isCollapsed: boolean;
-}
+import { SidebarItemProps, SidebarProps } from "@/types";
 
 const SidebarItem = ({ icon, text, to, isCollapsed }: SidebarItemProps) => (
 	<NavLink

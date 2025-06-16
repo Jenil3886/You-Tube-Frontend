@@ -3,10 +3,7 @@ import { ArrowLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { languages } from "@/data/languages";
-
-interface LanguageDropdownProps {
-	onClose: () => void;
-}
+import { LanguageDropdownProps } from "@/types";
 
 const LanguageDropdown = ({ onClose }: LanguageDropdownProps) => {
 	const [selectedLanguage, setSelectedLanguage] = useState("English (UK)");

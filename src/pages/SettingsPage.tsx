@@ -18,7 +18,7 @@ const SettingsPage = () => {
 	const [value, setValue] = useState("");
 
 	useEffect(() => {
-		document.title = "Settings - YouTastic";
+		document.title = "Settings - YouTube";
 	}, []);
 
 	const handleThemeChange = (newTheme: "light" | "dark" | "system") => {

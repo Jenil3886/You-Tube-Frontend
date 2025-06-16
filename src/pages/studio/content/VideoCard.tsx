@@ -8,12 +8,7 @@ import { Tooltip, TooltipProvider, TooltipContent, TooltipTrigger } from "@/comp
 import { FRONTEND_URL } from "@/constants";
 import { formatDateToDDMMYYYY } from "@/utils/helper";
 import UploadingVideoCard from "@/components/video/UploadingVideoCard";
-
-interface VideoCardProps {
-	video: any;
-	isSelected: boolean;
-	onSelectVideo: (id: string, checked: boolean) => void;
-}
+import { VideoCardProps } from "@/types";
 
 const VideoCard = ({ video, isSelected, onSelectVideo }: VideoCardProps) => {
 	const [showIcons, setShowIcons] = useState(false);

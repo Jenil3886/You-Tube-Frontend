@@ -1,20 +1,7 @@
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useEffect, useRef } from "react";
 import VideoCard from "./VideoCard";
-
-interface VideoGridProps {
-	videos: {
-		id: string;
-		thumbnail: string;
-		title: string;
-		channelName: string;
-		handle: string;
-		channelAvatar: string;
-		views: string;
-		timestamp: string;
-		duration: string;
-	}[];
-}
+import { VideoGridProps } from "@/types";
 
 const VideoGrid = ({ videos }: VideoGridProps) => {
 	const isMobile = useIsMobile();

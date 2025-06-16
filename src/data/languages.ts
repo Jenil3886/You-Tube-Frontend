@@ -1,7 +1,5 @@
-interface LanguageOption {
-	label: string;
-	value: string;
-}
+import { LanguageOption } from "@/types";
+
 export const languages: LanguageOption[] = [
 	{ label: "Afrikaans", value: "Afrikaans" },
 	{ label: "Azərbaycan", value: "Azerbaijani" },
