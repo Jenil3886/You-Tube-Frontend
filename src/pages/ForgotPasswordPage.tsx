@@ -16,7 +16,7 @@ const ForgotPasswordPage = () => {
 		setMessage("");
 		setLoading(true);
 		try {
-			const response = await axios.post(`${apiurl}/users/forgot-password`, { email });
+			const response = await axios.post(`${apiurl}/users/forgot-password/send-mail`, { email });
 			setMessage(response.data?.message || "Check your email for reset instructions.");
 		} catch (err: any) {
 			setError(err.response?.data?.message || "Failed to send reset email.");

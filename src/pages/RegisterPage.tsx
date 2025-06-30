@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { apiurl } from "@/constants";
+import youtubeLogo from "@/assets/youtubelogo.png";
+
 const RegisterPage = () => {
 	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
@@ -86,11 +88,16 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 dark:from-gray-800 dark:via-gray-900 dark:to-black p-4">
-			<div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6 md:p-8">
-				<h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">Create Account</h2>
+		// <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 dark:from-gray-800 dark:via-gray-900 dark:to-black p-4">
+		// 	<div className="w-full max-w-md bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-xl shadow-xl p-6 md:p-8 border border-white/30 dark:border-gray-700">
+		<div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#e52d27] via-[#ff6a00] to-[#f9d423] dark:from-gray-900 dark:via-gray-950 dark:to-black p-4">
+			<div className="w-full max-w-md bg-white/70 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 md:p-10 border border-white/30 dark:border-gray-800 relative">
+				<h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-6 flex flex-col items-center gap-2">
+					<img src={youtubeLogo} alt="YouTube Logo" className="h-10 w-auto mb-2" />
+					Create Account
+				</h2>
 
-				<form onSubmit={handleRegister} className="space-y-4">
+				<form onSubmit={handleRegister} className="space-y-5">
 					{/* Error Message Display */}
 					{error && (
 						<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -115,7 +122,7 @@ const RegisterPage = () => {
 							type="text"
 							value={fullName}
 							onChange={(e) => setFullName(e.target.value)}
-							className="w-full px-4 py-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+							className="w-full px-4 py-2 text-gray-900 dark:text-white bg-white/80 dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#e52d27] focus:border-transparent transition duration-200"
 							required
 							disabled={loading}
 							placeholder="John Doe"
@@ -132,7 +139,7 @@ const RegisterPage = () => {
 							type="email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
-							className="w-full px-4 py-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+							className="w-full px-4 py-2 text-gray-900 dark:text-white bg-white/80 dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#e52d27] focus:border-transparent transition duration-200"
 							required
 							disabled={loading}
 							placeholder="you@example.com"
@@ -149,7 +156,7 @@ const RegisterPage = () => {
 							type="text"
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
-							className="w-full px-4 py-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+							className="w-full px-4 py-2 text-gray-900 dark:text-white bg-white/80 dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#e52d27] focus:border-transparent transition duration-200"
 							required
 							disabled={loading}
 							placeholder="your_username"
@@ -158,7 +165,7 @@ const RegisterPage = () => {
 
 					{/* Password Input */}
 					<div>
-						<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="password">
+						<label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" htmlFor="password">
 							Password
 						</label>
 						<div className="relative">
@@ -167,11 +174,11 @@ const RegisterPage = () => {
 								type={showPassword ? "text" : "password"}
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								className="w-full px-4 py-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 pr-10" // Add padding right for icon
+								className="w-full px-4 py-2 text-gray-900 dark:text-white bg-white/80 dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#e52d27] focus:border-transparent transition duration-200 pr-10"
 								required
 								disabled={loading}
 								placeholder="******"
-								minLength={6} // Basic HTML validation
+								minLength={6}
 							/>
 							<button
 								type="button"
@@ -201,15 +208,9 @@ const RegisterPage = () => {
 							<input
 								id="avatar"
 								type="file"
-								accept="image/png, image/jpeg, image/jpg, image/webp" // Be specific about accepted types
+								accept="image/png, image/jpeg, image/jpg, image/webp"
 								onChange={handleAvatarChange}
-								className="block w-full text-sm text-gray-500 dark:text-gray-400
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-md file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-indigo-50 dark:file:bg-indigo-900 file:text-indigo-700 dark:file:text-indigo-300
-                                hover:file:bg-indigo-100 dark:hover:file:bg-indigo-800
-                                disabled:opacity-50"
+								className="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 dark:file:bg-indigo-900 file:text-indigo-700 dark:file:text-indigo-300 hover:file:bg-indigo-100 dark:hover:file:bg-indigo-800 disabled:opacity-50"
 								disabled={loading}
 							/>
 						</div>
@@ -218,7 +219,7 @@ const RegisterPage = () => {
 					{/* Submit Button */}
 					<button
 						type="submit"
-						className={`w-full flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 ease-in-out ${
+						className={`w-full flex justify-center items-center bg-[#e52d27] hover:bg-[#b31217] text-white font-bold py-2.5 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e52d27] transition duration-200 ease-in-out ${
 							loading ? "opacity-50 cursor-not-allowed" : ""
 						}`}
 						disabled={loading}
@@ -231,7 +232,7 @@ const RegisterPage = () => {
 										className="opacity-75"
 										fill="currentColor"
 										d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-									></path>
+									/>
 								</svg>
 								Processing...
 							</>
@@ -244,7 +245,10 @@ const RegisterPage = () => {
 				{/* Link to Login Page */}
 				<p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
 					Already have an account?{" "}
-					<Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+					<Link
+						to="/login"
+						className="text-sm font-medium text-[#e52d27] hover:text-[#b31217] dark:text-indigo-400 dark:hover:text-indigo-300 transition"
+					>
 						Log in here
 					</Link>
 				</p>

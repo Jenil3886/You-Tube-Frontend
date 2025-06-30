@@ -194,12 +194,15 @@ const App = () => {
 		<Routes>
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/register" element={<RegisterPage />} />
+			<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+			<Route path="/reset-password" element={<ResetPasswordPage />} />
 			<Route path="/" element={isAuthenticated ? <AppLayout /> : <Navigate to="/login" />}>
 				<Route index element={<HomePage />} />
 				<Route path="/video/:videoId" element={<VideoPage />} />
 				<Route path="/search" element={<SearchResultsPage />} />
 				<Route path="/settings" element={<SettingsPage />} />
 				<Route path="/profile" element={<ProfilePage />} />
+
 				<Route path="/history" element={<HistoryPage />} />
 				<Route path="/channel" element={<YourChannelPage />} />
 				<Route path="/channels/:handle" element={<PublicChannelPage />} />
@@ -218,8 +221,7 @@ const App = () => {
 				{/* New routes for Create dropdown options */}
 				<Route path="/upload" element={<UploadPage />} />
 				<Route path="/post" element={<PostPage />} />
-				<Route path="/forgot-password" element={<ForgotPasswordPage />} />
-				<Route path="/reset-password" element={<ResetPasswordPage />} />
+
 				<Route path="*" element={<NotFound />} />
 			</Route>
 

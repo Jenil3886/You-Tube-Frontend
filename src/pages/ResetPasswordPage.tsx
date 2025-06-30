@@ -30,7 +30,7 @@ const ResetPasswordPage = () => {
 		}
 		setLoading(true);
 		try {
-			const response = await axios.post(`${apiurl}/users/reset-password`, { token, password });
+			const response = await axios.put(`${apiurl}/users/reset-password`, { token, password, confirm_password: confirmPassword });
 			setMessage(response.data?.message || "Password reset successful!");
 			setTimeout(() => navigate("/login"), 2000);
 		} catch (err: any) {

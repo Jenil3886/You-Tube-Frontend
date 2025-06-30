@@ -7,15 +7,28 @@ import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useTheme } from "@/context/ThemeContext";
 import { useEffect, useState } from "react";
-import { Sun, Moon, ChevronsUpDown, Check } from "lucide-react";
+import { Sun, Moon, ChevronsUpDown, Check, EyeOff, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { languages } from "@/data/languages";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { apiurl } from "@/constants";
+import axios from "axios";
 
 const SettingsPage = () => {
 	const { theme, setTheme } = useTheme();
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState("");
+	const [oldPassword, setOldPassword] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	// const [showPassword, setShowPassword] = useState(false);
+
+	const [showOldPassword, setShowOldPassword] = useState(false);
+	const [showNewPassword, setShowNewPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 	useEffect(() => {
 		document.title = "Settings - YouTube";
@@ -23,8 +36,47 @@ const SettingsPage = () => {
 
 	const handleThemeChange = (newTheme: "light" | "dark" | "system") => {
 		setTheme(newTheme);
-		// toast.success(`Theme changed to ${newTheme}`);
+		toast.success(`Theme changed to ${newTheme}`);
 	};
+
+	const handleChangePassword = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		if (!oldPassword || !newPassword || !confirmPassword) {
+			toast.error("All fields are required");
+			return;
+		}
+
+		if (newPassword !== confirmPassword) {
+			toast.error("New passwords do not match");
+			return;
+		}
+
+		try {
+			const response = await axios.post(
+				`${apiurl}/users/change-password`,
+				{
+					oldPassword,
+					newPassword,
+				},
+				{
+					withCredentials: true,
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+					},
+				}
+			);
+
+			toast.success(response.data.message || "Password changed successfully!");
+			setOldPassword("");
+			setNewPassword("");
+			setConfirmPassword("");
+		} catch (error: any) {
+			const message = error.response?.data?.message || "Failed to change password. Please try again.";
+			toast.error(message);
+		}
+	};
+
 	return (
 		<div className="container max-w-4xl mx-auto py-8">
 			<h1 className="text-3xl font-bold mb-6">Settings</h1>
@@ -32,6 +84,7 @@ const SettingsPage = () => {
 			<Tabs defaultValue="general" className="w-full">
 				<TabsList className="mb-6">
 					<TabsTrigger value="general">General</TabsTrigger>
+					<TabsTrigger value="security">Security</TabsTrigger>
 					<TabsTrigger value="privacy">Privacy</TabsTrigger>
 					<TabsTrigger value="notifications">Notifications</TabsTrigger>
 					<TabsTrigger value="playback">Playback</TabsTrigger>
@@ -242,6 +295,101 @@ const SettingsPage = () => {
 							</Select>
 						</div>
 					</div>
+				</TabsContent>
+
+				<TabsContent value="security" className="space-y-6">
+					<Card>
+						<CardHeader>
+							<CardTitle>Change Password</CardTitle>
+							<p className="text-sm text-muted-foreground">Update your account password securely.</p>
+						</CardHeader>
+						<CardContent>
+							<form onSubmit={handleChangePassword} className="space-y-6">
+								{/* Current Password */}
+								<div className="space-y-2">
+									<Label htmlFor="oldPassword">Current Password</Label>
+									<div className="relative">
+										<Input
+											id="oldPassword"
+											type={showOldPassword ? "text" : "password"}
+											placeholder="Enter current password"
+											value={oldPassword}
+											onChange={(e) => setOldPassword(e.target.value)}
+											required
+											className="pr-10"
+										/>
+										<button
+											type="button"
+											onClick={() => setShowOldPassword(!showOldPassword)}
+											className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+											aria-label={showOldPassword ? "Hide password" : "Show password"}
+										>
+											{showOldPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+										</button>
+									</div>
+								</div>
+
+								{/* New Password */}
+								<div className="space-y-2">
+									<Label htmlFor="newPassword">New Password</Label>
+									<div className="relative">
+										<Input
+											id="newPassword"
+											type={showNewPassword ? "text" : "password"}
+											placeholder="Enter new password"
+											value={newPassword}
+											onChange={(e) => setNewPassword(e.target.value)}
+											required
+											className="pr-10"
+										/>
+										<button
+											type="button"
+											onClick={() => setShowNewPassword(!showNewPassword)}
+											className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+											aria-label={showNewPassword ? "Hide password" : "Show password"}
+										>
+											{showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+										</button>
+									</div>
+								</div>
+
+								{/* Confirm Password */}
+								<div className="space-y-2">
+									<Label htmlFor="confirmPassword">Confirm New Password</Label>
+									<div className="relative">
+										<Input
+											id="confirmPassword"
+											type={showConfirmPassword ? "text" : "password"}
+											placeholder="Re-enter new password"
+											value={confirmPassword}
+											onChange={(e) => setConfirmPassword(e.target.value)}
+											required
+											className="pr-10"
+										/>
+										<button
+											type="button"
+											onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+											className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+											aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+										>
+											{showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+										</button>
+									</div>
+
+									{/* Password Match Message */}
+									{confirmPassword && (
+										<p className={`text-sm ${newPassword === confirmPassword ? "text-green-500" : "text-red-500"}`}>
+											{newPassword === confirmPassword ? "Passwords match." : "Passwords do not match."}
+										</p>
+									)}
+								</div>
+
+								<Button type="submit" className="mt-2">
+									Update Password
+								</Button>
+							</form>
+						</CardContent>
+					</Card>
 				</TabsContent>
 			</Tabs>
 		</div>
