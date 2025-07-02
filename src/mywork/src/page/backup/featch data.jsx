@@ -14,6 +14,17 @@ function App() {
 				setloading(false);
 			});
 	}, []);
+
+	useEffect(() => {
+		const fetchPosts = async () => {
+			const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+			const data = await res.json();
+			setPost(data);
+			setloading(false);
+		};
+		fetchPosts();
+	}, []);
+
 	return (
 		<div className="card">
 			<h1>post</h1>
